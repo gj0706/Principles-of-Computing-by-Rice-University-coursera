@@ -6,8 +6,21 @@ def merge(line):
     """
     Function that merges a single row or column in 2048.
     """
-    new_line = list(line)
-    number_of_zeros = len(new_line)
-    result = 
     
-    return []
+    new_line = list(line)
+    num_of_zeros = len(new_line)
+    result = [] 
+    for i in range(len(new_line)):
+            if new_line[i] != 0:
+                result.append(new_line[i])
+    if len(result) < len(new_line):
+        result.extend([0] * (len(new_line)- len(result)))
+    
+    return result
+                     
+
+print merge([2, 2, 0, 2])
+
+    
+
+
