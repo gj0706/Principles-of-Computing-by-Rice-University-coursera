@@ -1,6 +1,6 @@
 
 # Merge function for 2048 game.
-# URL: http://www.codeskulptor.org/#user43_lC8pynLOlF_2.py
+# URL: http://www.codeskulptor.org/#user43_lC8pynLOlF_4.py
 
 def move_to_left(line):
     """
@@ -9,9 +9,9 @@ def move_to_left(line):
     the left, keep all the zeros to the right
     """
     result = [] 
-    for i in range(len(line)):
-            if line[i] != 0:
-                result.append(line[i])
+    for indx in range(len(line)):
+            if line[indx] != 0:
+                result.append(line[indx])
     # make the result list the same length as the original list
     # by adding zeros to the end of result list.
     result.extend([0] * (len(line)- len(result)))
@@ -27,12 +27,12 @@ def double_pair(line):
     """
     new_line = line[:]
     result = []
-    for i in range(len(line) - 1): 
-        if new_line[i] == new_line[i + 1]:
-            result.append(new_line[i] * 2)
-            new_line[i + 1] = 0          
-        elif new_line[i] != new_line[i + 1]:
-            result.append(new_line[i])
+    for indx in range(len(line) - 1): 
+        if new_line[indx] == new_line[indx + 1]:
+            result.append(new_line[indx] * 2)
+            new_line[indx + 1] = 0          
+        elif new_line[indx] != new_line[indx + 1]:
+            result.append(new_line[indx])
     # fix the off-by-one bug
     result.append(new_line[-1])
     # fix the length of result list
@@ -50,12 +50,13 @@ def merge(line):
     line3 = move_to_left(line2)
     return line3
     
-print merge([16, 16, 16, 8, 8, 2, 2, 8])
-print merge([𝟸, 𝟶, 𝟸, 𝟺])
-print merge([𝟶, 𝟶, 𝟸, 𝟸])
-print merge([𝟸, 𝟸, 𝟶, 𝟶])
-print merge([𝟸, 𝟸, 𝟸, 𝟸, 𝟸])
-print merge([𝟾, 𝟷𝟼, 𝟷𝟼, 𝟾])
+#print merge([16, 16, 16, 8, 8, 2, 2, 8])
+#print merge([16, 16, 16, 8, 8, 2, 2, 8])
+#print merge([2,2])
+#print merge([0, 0, 2, 2])
+#print merge([2, 2, 0, 0])
+#print merge([2, 2, 2, 2, 2])
+#print merge([8, 16, 16, 8])
 
 
 
