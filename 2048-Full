@@ -2,7 +2,9 @@
 Clone of 2048 game.
 """
 
-import poc_2048_gui
+#import poc_2048_gui
+import poc_simpletest
+import random
 
 # Directions, DO NOT MODIFY
 UP = 1
@@ -30,7 +32,6 @@ def move_to_left(line):
     # make the result list the same length as the original list
     # by adding zeros to the end of result list.
     result.extend([0] * (len(line)- len(result)))
-    
     return result
 
 def double_pair(line):
@@ -52,18 +53,17 @@ def double_pair(line):
     result.append(new_line[-1])
     # fix the length of result list
     result.extend([0] * (len(new_line)- len(result)))
-
     return result
-    
-def merge(line): 
+
+def merge(line):
     """
-    Final step:
-    Merge a single row in 2048
+    Helper function that merges a single row or column in 2048
     """
     line1 = move_to_left(line)
     line2 = double_pair(line1)
     line3 = move_to_left(line2)
     return line3
+
 
 class TwentyFortyEight:
     """
@@ -71,28 +71,28 @@ class TwentyFortyEight:
     """
 
     def __init__(self, grid_height, grid_width):
-        """
-        Initialize the attributes of TwentyFortyEeight class
-        """
+        # replace with your code
         self.grid_height = grid_height
         self.grid_width = grid_width
         
+        self.reset()
 
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        
-        # replace with your code
-        pass
-
+        self.initial_grid = [[0 for col in range(self.grid_width)]
+                                        for row in range(self.grid_height)]
+        return self.initial_grid
+                       
     def __str__(self):
         """
         Return a string representation of the grid for debugging.
         """
-        # replace with your code
-        return ""
+        return str(self.initial_grid)
+            
+        
 
     def get_grid_height(self):
         """
@@ -111,7 +111,7 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
-        # replace with your code
+        
         pass
 
     def new_tile(self):
@@ -120,23 +120,56 @@ class TwentyFortyEight:
         square.  The tile should be 2 90% of the time and
         4 10% of the time.
         """
-        # replace with your code
-        pass
-
+        tiles = []
+        for row in range(self.grid_height):
+            for col in range(self.grid_width):
+                if self.initial_grid[row][col] == 0: 
+                    tiles.append((row, col))
+        probablity = random.randrange(0,10)
+        new_tile = tiles[random.randrange(len(tiles))]
+        if len(tiles) != 0:                        
+            if probablity == 1:                
+                 self.initial_grid[new_tile[0]][new_tile[1]] = 4
+            else:
+                 self.initial_grid[new_tile[0]][new_tile[1]] = 2
+        if len(tiles) == 0:
+            print "No available moves" 
+        
+                                     
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
-        # replace with your code
-        pass
+        value = self.initial_grid[row][col]
+        
 
     def get_tile(self, row, col):
         """
         Return the value of the tile at position row, col.
         """
-        # replace with your code
-        return 0
+        return self.initial_grid[row][col]
 
 
-poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+#poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
+def run_suite():
+    suite = poc_simpletest.TestSuite()
+    game1 = TwentyFortyEight(2, 2)
+#    game2 = TwentyFortyEight(2, 2)
+#    game3 = TwentyFortyEight(3, 6)
+#    game4 = TwentyFortyEight(5, 8)
+    suite.run_test(str(game1),"[[0, 0], [0, 0]]", "Test1: ")
+#    suite.run_test(str(game2), "", "Test: ")
+#    suite.run_test(str(game3),"" , "Test: ")
+#    suite.run_test(str(game4), "", "Test: ")
+    suite.run_test(game1.new_tile(), " ", "Test2: ")
+    suite.run_test(str(game1), "[[4, 0], [0, 0]]", "Test3: ")
+    suite.run_test(game1.set_tile(0, 0, 4), "[[4, 0],[0, 0]]", "Test4: ")
+    suite.run_test(str(game1), "[[4, 0], [0, 0]]", "Test5: ")
 
+    suite.report_results()
+
+run_suite()
+    
+    
+
+    
