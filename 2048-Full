@@ -110,17 +110,46 @@ class TwentyFortyEight:
         """
         Get the width of the board.
         """
-        return self.grid_width
+      def  return self.grid_width
 
+     def traverse_grid(self, start_cell, direction, steps):
+        """
+    Function that iterates through the cells in a grid
+    in a linear direction
+    
+    Both start_cell is a tuple(row, col) denoting the
+    starting cell
+    
+    direction is a tuple that contains difference between
+    consecutive cells in the traversal
+    """
+        merge_list = []
+        for step in range(steps):
+            row = start_cell[0] + step * direction[0]
+            col = start_cell[1] + step * direction[1]
+            merge_list.append(self.initial_grid[row][col]) 
+        return merge_list
+    
     def move(self, direction):
         """
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
-        while True:
-            
-        
-
+        for index in self.indices.values():
+            start = index[0]
+            if direction == UP or dirction == DOWN:
+                steps = self.grid_height
+            elif direction == LEFT or direction == RIGHT:
+                steps = self.grid_width
+            merge_list = self.traverse_grid(start, OFFSETS[direction], steps)
+        values = []
+        for cell in merge_list:
+            values.append[self.grid[cell]]
+        merged_value = merge(values)
+        if moved == True:
+            self.grid[cell] =[merged_value[indx] for indx in range(len(merged_value)) ]
+            self.new_tile()
+           
     def new_tile(self):
         """
         Create a new tile in a randomly selected empty
