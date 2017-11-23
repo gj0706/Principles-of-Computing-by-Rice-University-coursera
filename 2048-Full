@@ -74,23 +74,29 @@ class TwentyFortyEight:
         # replace with your code
         self.grid_height = grid_height
         self.grid_width = grid_width
-        
         self.reset()
-
+        self.indices = {UP:[(0, col) for col in range(self.width)]
+                       DOWN:[(self.grid_height - 1, col) in range(self.width)]
+                       LEFT:[(row, 0) for row in range(self.height)]
+                       RIGHT:}[(row, self_width - 1) for row in range(self.height)]
+        self.moved = False
+        
     def reset(self):
         """
         Reset the game so the grid is empty except for two
         initial tiles.
         """
-        self.initial_grid = [[0 for col in range(self.grid_width)]
+        self.grid = [[0 for col in range(self.grid_width)]
                                         for row in range(self.grid_height)]
-        return self.initial_grid
-                       
+        self.new_tile()
+        self.new_tile()
+        return self.grid
+    
     def __str__(self):
         """
         Return a string representation of the grid for debugging.
         """
-        return str(self.initial_grid)
+        return str(self.grid)
             
         
 
@@ -111,8 +117,9 @@ class TwentyFortyEight:
         Move all tiles in the given direction and add
         a new tile if any tiles moved.
         """
+        while True:
+            
         
-        pass
 
     def new_tile(self):
         """
@@ -123,37 +130,36 @@ class TwentyFortyEight:
         tiles = []
         for row in range(self.grid_height):
             for col in range(self.grid_width):
-                if self.initial_grid[row][col] == 0: 
+                if self.grid[row][col] == 0: 
                     tiles.append((row, col))
         probablity = random.randrange(0,10)
         new_tile = tiles[random.randrange(len(tiles))]
         if len(tiles) != 0:                        
             if probablity == 1:                
-                 self.initial_grid[new_tile[0]][new_tile[1]] = 4
+                 self.grid[new_tile[0]][new_tile[1]] = 4
             else:
-                 self.initial_grid[new_tile[0]][new_tile[1]] = 2
-        if len(tiles) == 0:
-            print "No available moves" 
+                 self.grid[new_tile[0]][new_tile[1]] = 2
+#        if len(tiles) == 0:
+#            print "Game over!" 
         
                                      
     def set_tile(self, row, col, value):
         """
         Set the tile at position row, col to have the given value.
         """
-        value = self.initial_grid[row][col]
-        
+        self.grid[row][col] = value
 
     def get_tile(self, row, col):
         """
         Return the value of the tile at position row, col.
         """
-        return self.initial_grid[row][col]
+        return self.grid[row][col]
 
 
 #poc_2048_gui.run_gui(TwentyFortyEight(4, 4))
 def run_suite():
     suite = poc_simpletest.TestSuite()
-    game1 = TwentyFortyEight(2, 2)
+    game1 = TwentyFortyEight(4, 4)
 #    game2 = TwentyFortyEight(2, 2)
 #    game3 = TwentyFortyEight(3, 6)
 #    game4 = TwentyFortyEight(5, 8)
@@ -161,15 +167,27 @@ def run_suite():
 #    suite.run_test(str(game2), "", "Test: ")
 #    suite.run_test(str(game3),"" , "Test: ")
 #    suite.run_test(str(game4), "", "Test: ")
-    suite.run_test(game1.new_tile(), " ", "Test2: ")
+    game1.new_tile()
+    suite.run_test(str(game1), "[[2, 0], [0, 0]]", "Test2: ")
+    game1.set_tile(0, 0, 4)
     suite.run_test(str(game1), "[[4, 0], [0, 0]]", "Test3: ")
-    suite.run_test(game1.set_tile(0, 0, 4), "[[4, 0],[0, 0]]", "Test4: ")
-    suite.run_test(str(game1), "[[4, 0], [0, 0]]", "Test5: ")
-
+    game1.reset()
+    suite.run_test(str(game1), "[[4, 0], [0, 0]]", "Test4: ")
     suite.report_results()
 
 run_suite()
     
     
-
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
