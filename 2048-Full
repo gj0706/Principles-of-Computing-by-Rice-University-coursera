@@ -140,13 +140,12 @@ class TwentyFortyEight:
         a new tile if any tiles moved.
         """
         moved = False
-      
-        if direction == UP or direction == DOWN:
-            steps = self.get_grid_height()
-        elif direction == LEFT or direction == RIGHT:
-            steps = self.get_grid_width()
-        for cell in self._dir_indices[direction]:
+        for cell in self._dir_indices[direction]:         
             start = cell
+            if direction == UP or direction == DOWN:
+                steps = self.get_grid_height()
+            elif direction == LEFT or direction == RIGHT:
+                steps = self.get_grid_width()
             merge_list = self.traverse_grid(start, OFFSETS[direction], steps)  
             merged_list = merge(merge_list)
             if merged_list != merge_list:
