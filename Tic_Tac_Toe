@@ -15,6 +15,11 @@ SCORE_OTHER = 1.0   # Score for squares played by the other player
     
 # Add your functions here.
 def mc_trial(board, player):
+    """
+    Simulate a trial of Tic-Tac-Toe. Two players
+    take turns to choose a randomly selected non-empty
+    square until one wins
+    """
     while board.check_win() == None:
         empty_square = random.choice(board.get_empty_squares())
         row = empty_square[0]
