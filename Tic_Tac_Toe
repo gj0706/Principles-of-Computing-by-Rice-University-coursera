@@ -16,9 +16,9 @@ SCORE_OTHER = 1.0   # Score for squares played by the other player
 # Add your functions here.
 def mc_trial(board, player):
     """
-    Simulate a trial of Tic-Tac-Toe. Two players
+    Simulates a trial of Tic-Tac-Toe. Two players
     take turns to choose a randomly selected non-empty
-    square until one wins
+    square until one wins.
     """
     while board.check_win() == None:
         empty_square = random.choice(board.get_empty_squares())
@@ -31,8 +31,25 @@ def mc_trial(board, player):
         
 
 def mc_update_scores(scores, board, player):
-    pass
-
+     """
+     Takes a grid of scores (a list of lists) with the same 
+     dimensions as the Tic-Tac-Toe board, a board from a completed game, 
+     and which player the machine player is. It scores the 
+     completed board and updates the scores grid. 
+    """
+    current_player = player
+    other_player = provided.switch_player(player)
+    for row in range(board.get_dim()):
+        for col in range(board.get_dim()):  
+            if board.check_win() == current_player and board.square(row,col) == current_player:
+                scores[row][col] += SCORE_CURRENT
+            elif board.check_win() == current_player and board.square(row,col) == other_player:
+                scores[row][col] -= SCORE_OTHER
+            elif board.check_win() == other_player and board.square(row, col) == other_player:
+                scores[row][col] += SCORE_OTHER
+            elif board.check_win() == other_player and board.square(row,col) == current_player:
+                scores[row][col] -= SCORE_CURRENT
+            
 def get_best_move(board, scores):
     pass
 
