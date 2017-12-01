@@ -51,7 +51,26 @@ def mc_update_scores(scores, board, player):
                 scores[row][col] -= SCORE_CURRENT
             
 def get_best_move(board, scores):
-    pass
+    """
+    Takes a current board and a grid of scores, find all
+    of the empty squares with the maximum score and randomly
+    return one of them as a (row, colum) tuple.
+    """
+    score_values =[]
+    score_dict = {}
+    empty_squares = board.get_empty_squares()
+    max_score_squares = [] 
+    if len(empty_squares) == 0:
+        return 
+    for row, col in empty_squares:
+        score = scores[row][col]
+        score_values.append(score)
+        score_dict[(row, col)] = score
+    max_score = max(score_values)
+    for key, value in score_dict.items():
+        if value == max_score:
+            max_score_squares.append(key)            
+    return random.choice(max_score_squares)
 
 def mc_move(board, player, trials):
     pass
