@@ -73,14 +73,20 @@ def get_best_move(board, scores):
     return random.choice(max_score_squares)
 
 def mc_move(board, player, trials):
-    pass
+    """
+    Use the Monte Carlo simulation to return a move
+    for the machine player in the form of a (row, col)
+    tuple.
+    """
+    scores = [[0 for dummy_row in range(board.get_dim())]
+              for dummy_col in range(board.get_dim())]
+    for dummy in range(trials):
+        clone_board = board.clone()
+        mc_trial(clone_board, player)
+        mc_update_scores(scores, clone_board, player)
+    return get_best_move(board, scores)
 
 
-
-# Test game with the console or the GUI.  Uncomment whichever 
-# you prefer.  Both should be commented out when you submit 
-# for testing to save time.
-
-# provided.play_game(mc_move, NTRIALS, False)        
-# poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
+ provided.play_game(mc_move, NTRIALS, False)        
+ poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
 
