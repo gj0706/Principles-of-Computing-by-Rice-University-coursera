@@ -124,15 +124,15 @@ def simulate_clicker(build_info, duration, strategy):
     duration with the given strategy.  Returns a ClickerState
     object corresponding to the final state of the game.
     """
-    build_info = provided.clone()
+build_info = provided.clone()
     clicker = ClickerState()
     time_left = duration - clicker.get_time()
-    strategy_info = (clicker.get_cookies(),
+    item = strategy(clicker.get_cookies(),
                       clicker.get_cps(),
                       clicker.get_history(), 
                       time_left,
                       build_info)    
-    time_needed = clicker.time_until(build_info.get_cost())   
+    time_needed = clicker.time_until(build_info.get_cost(item))   
     
     while clicker.get_time() <= duration:
         if clicker.get_time() > duration:
