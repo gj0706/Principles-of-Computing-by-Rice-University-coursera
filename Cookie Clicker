@@ -126,15 +126,31 @@ def simulate_clicker(build_info, duration, strategy):
     """
     build_info = provided.clone()
     clicker = ClickerState()
-    if clicker.get_time() > duration:
-        return
+    time_left = duration - clicker.get_time()
+    strategy_info = (clicker.get_cookies(),
+                      clicker.get_cps(),
+                      clicker.get_history(), 
+                      time_left,
+                      build_info)    
+    time_needed = clicker.time_until(build_info.get_cost())   
+    
     while clicker.get_time() <= duration:
-        if strategy_None:
-            return
-        elif strategy_cheap:
-            clicker.buy_item(build_info.build_items(), build_info.get_cost,
-                            build_info.get_cps())
+        if clicker.get_time() > duration:
+        	break
+        if strategy(stragety_info) == None:
+            break
+        else:
+            
+        if clicker.get_cookies() < build_info.get_cost():
+            clicker.wait(time_needed)
+        elif clicker.get_cookies() >= build_info.get_cost():
+            if time_left >= time_needed:
+                strategy(stragegy_info)
+            else:
+                break
         
+           
+    return ClickerState()
         
     
     
