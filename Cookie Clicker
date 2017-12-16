@@ -124,43 +124,44 @@ def simulate_clicker(build_info, duration, strategy):
     duration with the given strategy.  Returns a ClickerState
     object corresponding to the final state of the game.
     """
-build_info = provided.clone()
+    new_build_info = build_info.clone()
     clicker = ClickerState()
-    time_left = duration - clicker.get_time()
-    item = strategy(clicker.get_cookies(),
+      
+    
+    while clicker.get_time() <= duration:
+        # Check the current time and break out of the loop if the
+        # Duration has been passed.
+        if clicker.get_time() > duration:
+                    break
+                
+        # Define local variables needed
+        time_left = duration - clicker.get_time()           
+        time_needed = clicker.time_until(new_build_info.get_cost(item))
+        item = strategy(clicker.get_cookies(),
                       clicker.get_cps(),
                       clicker.get_history(), 
                       time_left,
-                      build_info)    
-    time_needed = clicker.time_until(build_info.get_cost(item))   
-    
-    while clicker.get_time() <= duration:
-        if clicker.get_time() > duration:
-        	break
+                      new_build_info) 
+        
+        # Call the strategy function to determine with item to buy next.
         if item == None:
             break
-        else:          
-            if time_left >= time_needed:
-                clicker.wait(time_needed)
-                clicker.buy_item(item, build_info.get_cost(item), build_info.get_cps())
-                build_info.update_item(item)
-            else:
-                break
-
-           
-    return clicker
+            
+        # Determine how much time must elapse until it is possible to purchase
+        #the item.
+        if time_needed + clicker.get_time() <= duration:
+            clicker.wait(time_needed)
+            clicker.buy_item(item, new_build_info.get_cost(item), new_build_info.get_cps(item))
+            new_build_info.update_item(item)
+        else:
+            break
+            clicker.wait(time_needed)
+         
+    # after the loop, if time left, allow cookies to accumulate for the time left
+    if clicker.get_time() < duration:
+        clicker.wait(duration - clicker.get_time())
         
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    return ClickerState()
+    return clicker
 
 
 def strategy_cursor_broken(cookies, cps, history, time_left, build_info):
