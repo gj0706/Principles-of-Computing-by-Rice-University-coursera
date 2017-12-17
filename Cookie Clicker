@@ -136,13 +136,13 @@ def simulate_clicker(build_info, duration, strategy):
                 
         # Define local variables needed
         time_left = duration - clicker.get_time()           
-        time_needed = clicker.time_until(new_build_info.get_cost(item))
         item = strategy(clicker.get_cookies(),
                       clicker.get_cps(),
                       clicker.get_history(), 
                       time_left,
                       new_build_info) 
-        
+        time_needed = clicker.time_until(new_build_info.get_cost(item))
+
         # Call the strategy function to determine with item to buy next.
         if item == None:
             break
