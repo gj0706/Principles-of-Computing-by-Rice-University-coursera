@@ -190,7 +190,16 @@ def strategy_cheap(cookies, cps, history, time_left, build_info):
     """
     Always buy the cheapest item you can afford in the time left.
     """
-    return None
+    build_cheap = build_info.clone()
+    total_items = build_cheap.build_items()
+    item_costs = [build_cheap.get_cost(item) for item in total_items]
+    cheapest = min(item_costs)
+    cheapest_index = item_costs.index(cheapest)
+    if cheapest <= cookies + cps * time_left:
+        return total_items[cheapest_index]       
+    else:
+        return None
+    
 
 def strategy_expensive(cookies, cps, history, time_left, build_info):
     """
