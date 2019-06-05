@@ -1,0 +1,65 @@
+
+# Merge function for 2048 game.
+# URL: http://www.codeskulptor.org/#user43_lC8pynLOlF_4.py
+
+def move_to_left(line):
+    """
+    First step of merging: 
+    Move all the numbers in the list to
+    the left, keep all the zeros to the right
+    """
+    result = [] 
+    for indx in range(len(line)):
+            if line[indx] != 0:
+                result.append(line[indx])
+    # make the result list the same length as the original list
+    # by adding zeros to the end of result list.
+    result.extend([0] * (len(line)- len(result)))
+    
+    return result
+
+def double_pair(line):
+    """
+    Second step of merging: 
+    Loop through pairs of numbers with the same values 
+    in the list, replace each pair with a doubled value
+    and a zero, then add the values to the result list.
+    """
+    new_line = line[:]
+    result = []
+    for indx in range(len(line) - 1): 
+        if new_line[indx] == new_line[indx + 1]:
+            result.append(new_line[indx] * 2)
+            new_line[indx + 1] = 0          
+        elif new_line[indx] != new_line[indx + 1]:
+            result.append(new_line[indx])
+    # fix the off-by-one bug
+    result.append(new_line[-1])
+    # fix the length of result list
+    result.extend([0] * (len(new_line)- len(result)))
+
+    return result
+    
+def merge(line): 
+    """
+    Final step:
+    Implement merge by combining the previous two functions.
+    """
+    line1 = move_to_left(line)
+    line2 = double_pair(line1)
+    line3 = move_to_left(line2)
+    return line3
+    
+#print merge([16, 16, 16, 8, 8, 2, 2, 8])
+#print merge([16, 16, 16, 8, 8, 2, 2, 8])
+#print merge([2,2])
+#print merge([0, 0, 2, 2])
+#print merge([2, 2, 0, 0])
+#print merge([2, 2, 2, 2, 2])
+#print merge([8, 16, 16, 8])
+
+
+
+
+
+
